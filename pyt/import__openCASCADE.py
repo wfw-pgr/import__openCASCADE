@@ -12,7 +12,7 @@ def make__geometry():
     scale   = 1.0e-6
     inpFile = "model/model.step"
     
-    gmsh.option.setNumber( "Geometry.OCCScaling", 1.0e-6 )
+    gmsh.option.setNumber( "Geometry.OCCScaling", scale )
     gmsh.model.occ.importShapes( inpFile )
     
     return()
@@ -68,6 +68,13 @@ if ( __name__=="__main__" ):
     gmsh.model.occ.synchronize()
     gmsh.model.mesh.generate(3)
     gmsh.write( "msh/model.msh" )
+
+    flag__bdf_output = True
+    if ( flag__bdf__output ):
+        gmsh.option.setNumber( "Mesh.SaveElementTagType", 2 )
+        gmsh.option.setNumber( "Mesh.BdfFieldFormat"    , 0 )
+        gmsh.write( "msh/model.bdf" )
+    
     gmsh.finalize()
     
 
